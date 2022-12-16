@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+  label-studio:
+    image: heartexlabs/label-studio:1.4.0
+    working_dir: /label-studio
+    volumes:
+      - ./volume/label-studio-result:/label-studio/data
+    command: label-studio start --username ${USERNAME} --password ${PASSWORD}
+    ports:
+      - "7777:8080"
+  mongo:
+    image: mongo
+    restart: always
+    volumes:
+      - ./volume/mongo:/data/db
+    ports:
+      - "7778:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGODB_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_PASSWORD}
